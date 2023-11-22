@@ -1,0 +1,181 @@
+---
+title: "classification_results"
+author: "Equipo 5"
+date: "2023-11-17"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r bibliotecas}
+library(ggplot2)
+library(magick)
+```
+
+## Resultados de la clasificación
+
+Este script muestra los resultados de la validación k-fold para los sets de datos. Estos resultados se encuentran en la carpeta /models que se encuentra debajo de la carpeta principal del proyecto.
+
+```{r ruta}
+ruta <- file.path("..","..","models") #Une los elementos del directorio
+archivo_datasets <- file.path("..","..","data","class_maps_binded_1.RData");
+load(archivo_datasets)
+```
+
+## Funciones para obtener las métricas guardadas
+
+```{r funciones métricas}
+obtener_metricas <- function(lista_cm_ts) {
+  n_kfold <- length(lista_cm_ts)
+  oa_vector <- numeric()
+  kappa_vector <- numeric()
+  for(i in 1:n_kfold) {
+    oa_vector <- c(oa_vector, as.double(lista_cm_ts[[i]]$overall[1]))
+    kappa_vector <- c(kappa_vector, as.double(lista_cm_ts[[i]]$overall[2]))
+  }
+  metricas <- data.frame("k_fold" = 1:n_kfold, "ov_acc" = oa_vector, "kappa" = kappa_vector)
+  return(metricas)
+}
+```
+
+## Graficar las imágenes GT
+
+El mapa GT es similar a un mapa de clasificación. Necesita de una paleta de colores para asignar un color específico a cada clase. Las clases consideradas se presentan a continuación:
+
+|        **Clase**         | **Etiqueta** |
+|:------------------------:|:------------:|
+|        **Trees**         |      1       |
+|       **Asphalt**        |      2       |
+| **Self-Blocking Bricks** |      3       |
+|       **Bitumen**        |      4       |
+|       **Shadows**        |      5       |
+|       **Meadows**        |      6       |
+|      **Bare soil**       |      7       |
+|        **Gravel**        |      8       |
+| **Painted metal sheets** |      9       |
+|        **Tiles**         |      10      |
+|        **Water**         |      11      |
+
+Para estas clases se utiliza la siguiente paleta:
+
+```{r paleta de colores}
+#Valores RGB para los colores por clase
+colores <- matrix(c(
+  0, 0, 0,       # Background (Clase 0)
+  46, 139, 87,   # Clase 1
+  0, 0, 255,     # Clase 2
+  255, 128, 0,   # Clase 3
+  210, 180, 140, # Clase 4
+  255, 0, 255,   # Clase 5
+  102, 0, 204,   # Clase 6
+  153, 76, 0,    # Clase 7
+  0, 255, 0,     # Clase 8
+  128, 128, 0,   # Clase 9
+  0, 51, 102,    # Clase 10
+  100, 149, 237  # Clase 11
+), ncol = 3, byrow = TRUE)
+```
+
+Esta paleta se aprecia gráficamente de la siguiente forma:
+
+```{r graficar paleta}
+#Acomodar los colores en paleta
+paleta_rgb <- rgb(colores[, 1], colores[, 2], colores[, 3], maxColorValue = 255)
+
+#Crear el gráfico de barras con los colores por clase
+barplot(rep(1, 12), col = paleta_rgb, names.arg = 0:11, main = "Paleta de Colores por Clase",
+        xlab = "Clases", ylab = "", cex.names = 0.8, border = NA, axes = FALSE)
+```
+
+Luego, se define la función "graficar_mapa_clasificacion" para generar una imagen RGB a partir del mapa ground truth.
+
+```{r funcion graficar}
+graficar_mapa_clasificacion <- function(mapa, colores) {
+  #Obtener dimensiones
+  dim_mapa <- dim(mapa)
+  n_rows <- dim_mapa[1]
+  n_cols <- dim_mapa[2]
+  
+  #Crear imagen RGB
+  img_mapa <- array(0, dim = c(n_rows, n_cols, 3))
+  for(rw in 1:n_rows) {
+    for(cl in 1:n_cols) {
+      img_mapa[rw, cl, ] = colores[mapa[rw, cl] + 1, ]
+    }
+  }
+  
+  #Graficar mapa
+  img_mapa_raster <- as.raster(img_mapa, max = 255)
+  img_mapa_magick <- magick::image_read(img_mapa_raster)
+  #print(img_mapa_magick) #En el viewer y el documento Knit
+  #plot(img_mapa_raster) #En la vista "Visual"
+  return(list(raster = img_mapa_raster, magick = img_mapa_magick))
+}
+```
+
+## Binded datasets
+
+Estos son los resultados de 5 iteraciones k-fold con una división de 50% de entrenamiento.
+
+```{r Binded datasets OA}
+load(file.path(ruta,"binded_50_1.RData"))
+metricas <- obtener_metricas(lista_cm_ts)
+ggplot(metricas) +
+  aes(x = k_fold, y = ov_acc) +
+  geom_line(colour = "#440154") +
+  labs(
+    x = "Iteraciones k-fold",
+    y = "Overall Accuracy",
+    title = "Overall Accuracy"
+  ) +
+  theme_minimal()
+```
+
+```{r stat}
+oa_mean <- sprintf("%.4f", mean(metricas$ov_acc))
+oa_sd <- sprintf("%.4f", sd(metricas$ov_acc))
+kappa_mean <- sprintf("%.4f", mean(metricas$kappa))
+print(paste("Overall Accuracy promedio:", oa_mean))
+print(paste("Overall Accuracy desviación estándar:", oa_sd))
+print(paste("Kappa promedio:", kappa_mean))
+```
+
+El detalle de resultados de la iteración 5 se muestran a continuación:
+
+```{r detalle iteracion 5}
+print(lista_cm_ts[[5]])
+```
+
+Posteriormente, se grafica cada set de datos y se guardan sus imágenes en formato png.
+
+### Pavia University
+
+Resultado de clasificación utilizando pixeles de los 3 datasets para entrenar.
+
+```{r graficar Pavia University}
+mapas <- graficar_mapa_clasificacion(img_lab_puni, colores)
+image_write(mapas$magick, path = "pavia_uni_class_map_binded.png", format = "png")
+print(mapas$magick)
+```
+
+### Pavia Right
+
+Resultado de clasificación utilizando pixeles de los 3 datasets para entrenar.
+
+```{r graficar Pavia Right}
+mapas <- graficar_mapa_clasificacion(img_lab_pright, colores)
+image_write(mapas$magick, path = "pavia_right_class_map_binded.png", format = "png")
+print(mapas$magick)
+```
+
+### Pavia Left
+
+Resultado de clasificación utilizando pixeles de los 3 datasets para entrenar.
+
+```{r graficar Pavia Left}
+mapas <- graficar_mapa_clasificacion(img_lab_pleft, colores)
+image_write(mapas$magick, path = "pavia_left_class_map_binded.png", format = "png")
+print(mapas$magick)
+```

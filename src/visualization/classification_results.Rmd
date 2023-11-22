@@ -1,0 +1,119 @@
+---
+title: "classification_results"
+author: "Equipo 5"
+date: "2023-11-17"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r bibliotecas}
+library(ggplot2)
+```
+
+## Resultados de la clasificación
+
+Este script muestra los resultados de la validación k-fold para los sets de datos. Estos resultados se encuentran en la carpeta /models que se encuentra debajo de la carpeta principal del proyecto.
+
+```{r ruta}
+ruta <- file.path("..","..","models") #Une los elementos del directorio
+```
+
+## Funciones para obtener las métricas guardadas
+
+```{r funciones métricas}
+obtener_metricas <- function(lista_cm_ts) {
+  n_kfold <- length(lista_cm_ts)
+  oa_vector <- numeric()
+  kappa_vector <- numeric()
+  for(i in 1:n_kfold) {
+    oa_vector <- c(oa_vector, as.double(lista_cm_ts[[i]]$overall[1]))
+    kappa_vector <- c(kappa_vector, as.double(lista_cm_ts[[i]]$overall[2]))
+  }
+  metricas <- data.frame("k_fold" = 1:n_kfold, "ov_acc" = oa_vector, "kappa" = kappa_vector)
+  return(metricas)
+}
+```
+
+## Pavia University
+
+Estos son los resultados de 5 iteraciones k-fold con una división de 50% de entrenamiento.
+
+```{r Pavia University}
+load(file.path(ruta,"pavia_uni_50.RData"))
+metricas <- obtener_metricas(lista_cm_ts)
+ggplot(metricas) +
+  aes(x = k_fold, y = ov_acc) +
+  geom_line(colour = "#440154") +
+  labs(
+    x = "Iteraciones k-fold",
+    y = "Overall Accuracy",
+    title = "Overall Accuracy"
+  ) +
+  theme_minimal()
+```
+
+```{r PU. stat}
+oa_mean <- sprintf("%.4f", mean(metricas$ov_acc))
+oa_sd <- sprintf("%.4f", sd(metricas$ov_acc))
+kappa_mean <- sprintf("%.4f", mean(metricas$kappa))
+print(paste("Overall Accuracy promedio:", oa_mean))
+print(paste("Overall Accuracy desviación estándar:", oa_sd))
+print(paste("Kappa promedio:", kappa_mean))
+```
+
+## Pavia Right
+
+Estos son los resultados de 5 iteraciones k-fold con una división de 50% de entrenamiento.
+
+```{r Pavia Right}
+load(file.path(ruta,"pavia_right_50.RData"))
+metricas <- obtener_metricas(lista_cm_ts)
+ggplot(metricas) +
+  aes(x = k_fold, y = ov_acc) +
+  geom_line(colour = "#440154") +
+  labs(
+    x = "Iteraciones k-fold",
+    y = "Overall Accuracy",
+    title = "Overall Accuracy"
+  ) +
+  theme_minimal()
+```
+
+```{r PR. stat}
+oa_mean <- sprintf("%.4f", mean(metricas$ov_acc))
+oa_sd <- sprintf("%.4f", sd(metricas$ov_acc))
+kappa_mean <- sprintf("%.4f", mean(metricas$kappa))
+print(paste("Overall Accuracy promedio:", oa_mean))
+print(paste("Overall Accuracy desviación estándar:", oa_sd))
+print(paste("Kappa promedio:", kappa_mean))
+```
+
+## Pavia Left
+
+Estos son los resultados de 5 iteraciones k-fold con una división de 50% de entrenamiento.
+
+```{r Pavia Left}
+load(file.path(ruta,"pavia_left_50.RData"))
+metricas <- obtener_metricas(lista_cm_ts)
+ggplot(metricas) +
+  aes(x = k_fold, y = ov_acc) +
+  geom_line(colour = "#440154") +
+  labs(
+    x = "Iteraciones k-fold",
+    y = "Overall Accuracy",
+    title = "Overall Accuracy"
+  ) +
+  theme_minimal()
+```
+
+```{r PL. stat}
+oa_mean <- sprintf("%.4f", mean(metricas$ov_acc))
+oa_sd <- sprintf("%.4f", sd(metricas$ov_acc))
+kappa_mean <- sprintf("%.4f", mean(metricas$kappa))
+print(paste("Overall Accuracy promedio:", oa_mean))
+print(paste("Overall Accuracy desviación estándar:", oa_sd))
+print(paste("Kappa promedio:", kappa_mean))
+```
