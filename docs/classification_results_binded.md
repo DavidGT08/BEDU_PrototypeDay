@@ -249,7 +249,7 @@ entrenar.
 
 ``` r
 mapas <- graficar_mapa_clasificacion(img_lab_puni, colores)
-image_write(mapas$magick, path = "pavia_uni_class_map_binded.png", format = "png")
+image_write(mapas$magick, path = "./class_maps/pavia_uni_class_map_binded.png", format = "png")
 print(mapas$magick)
 ```
 
@@ -267,7 +267,7 @@ entrenar.
 
 ``` r
 mapas <- graficar_mapa_clasificacion(img_lab_pright, colores)
-image_write(mapas$magick, path = "pavia_right_class_map_binded.png", format = "png")
+image_write(mapas$magick, path = "./class_maps/pavia_right_class_map_binded.png", format = "png")
 print(mapas$magick)
 ```
 
@@ -285,7 +285,7 @@ entrenar.
 
 ``` r
 mapas <- graficar_mapa_clasificacion(img_lab_pleft, colores)
-image_write(mapas$magick, path = "pavia_left_class_map_binded.png", format = "png")
+image_write(mapas$magick, path = "./class_maps/pavia_left_class_map_binded.png", format = "png")
 print(mapas$magick)
 ```
 

@@ -156,7 +156,7 @@ Resultado de clasificación utilizando pixeles de los 3 datasets para entrenar.
 
 ```{r graficar Pavia University}
 mapas <- graficar_mapa_clasificacion(img_lab_puni, colores)
-image_write(mapas$magick, path = "pavia_uni_class_map_binded.png", format = "png")
+image_write(mapas$magick, path = "./class_maps/pavia_uni_class_map_binded.png", format = "png")
 print(mapas$magick)
 ```
 
@@ -166,7 +166,7 @@ Resultado de clasificación utilizando pixeles de los 3 datasets para entrenar.
 
 ```{r graficar Pavia Right}
 mapas <- graficar_mapa_clasificacion(img_lab_pright, colores)
-image_write(mapas$magick, path = "pavia_right_class_map_binded.png", format = "png")
+image_write(mapas$magick, path = "./class_maps/pavia_right_class_map_binded.png", format = "png")
 print(mapas$magick)
 ```
 
@@ -176,6 +176,6 @@ Resultado de clasificación utilizando pixeles de los 3 datasets para entrenar.
 
 ```{r graficar Pavia Left}
 mapas <- graficar_mapa_clasificacion(img_lab_pleft, colores)
-image_write(mapas$magick, path = "pavia_left_class_map_binded.png", format = "png")
+image_write(mapas$magick, path = "./class_maps/pavia_left_class_map_binded.png", format = "png")
 print(mapas$magick)
 ```

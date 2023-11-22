@@ -124,7 +124,7 @@ en formato png.
 
 ``` r
 mapas <- graficar_mapa_clasificacion(gt_puni, colores)
-image_write(mapas$magick, path = "pavia_uni_gt.png", format = "png")
+image_write(mapas$magick, path = "./class_maps/pavia_uni_gt.png", format = "png")
 print(mapas$magick)
 ```
 
@@ -137,7 +137,7 @@ print(mapas$magick)
 
 ``` r
 mapas <- graficar_mapa_clasificacion(gt_pright, colores)
-image_write(mapas$magick, path = "pavia_right_gt.png", format = "png")
+image_write(mapas$magick, path = "./class_maps/pavia_right_gt.png", format = "png")
 print(mapas$magick)
 ```
 
@@ -150,7 +150,7 @@ print(mapas$magick)
 
 ``` r
 mapas <- graficar_mapa_clasificacion(gt_pleft, colores)
-image_write(mapas$magick, path = "pavia_left_gt.png", format = "png")
+image_write(mapas$magick, path = "./class_maps/pavia_left_gt.png", format = "png")
 print(mapas$magick)
 ```
 
