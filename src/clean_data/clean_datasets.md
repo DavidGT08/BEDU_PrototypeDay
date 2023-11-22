@@ -1,17 +1,16 @@
----
-title: "clean_datasets"
-author: "Equipo 5"
-date: "2023-11-20"
-output: github_document
----
-
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
+clean_datasets
+================
+Equipo 5
+2023-11-20
 
 # Homologación de los sets de datos
 
-Los sets de datos Pavia University, Pavia Right y Pavia Left contienen, cada uno, un mapa de referencia etiquetado con diferentes clases. El problema que se encuentra es que los sets tienen clases que se intersectan, sin embargo, en su respectivo mapa de referencia las etiquetas de las clases son diferentes. Por lo tanto se utiliza la siguiente tabla para el etiquetado:
+Los sets de datos Pavia University, Pavia Right y Pavia Left contienen,
+cada uno, un mapa de referencia etiquetado con diferentes clases. El
+problema que se encuentra es que los sets tienen clases que se
+intersectan, sin embargo, en su respectivo mapa de referencia las
+etiquetas de las clases son diferentes. Por lo tanto se utiliza la
+siguiente tabla para el etiquetado:
 
 |          Clase           | Nueva Etiqueta | P. University | P. Left | P. Right |
 |:------------------------:|:--------------:|:-------------:|:-------:|:--------:|
@@ -30,9 +29,11 @@ Los sets de datos Pavia University, Pavia Right y Pavia Left contienen, cada uno
 
 ## Lectura local de los datos
 
-Es necesario ejecutar antes el escript "read_datasets" del proyecto para descargar los datos desde github y guardarlos localmente. En este script se leen los archivos RData.
+Es necesario ejecutar antes el escript “read_datasets” del proyecto para
+descargar los datos desde github y guardarlos localmente. En este script
+se leen los archivos RData.
 
-```{r leer datos locales}
+``` r
 ruta_datos <- file.path("..","..","data")
 load(file.path(ruta_datos,"pavia_uni.RData"))
 load(file.path(ruta_datos,"pavia_right.RData"))
@@ -41,9 +42,11 @@ load(file.path(ruta_datos,"pavia_left.RData"))
 
 ## Ordenamiento de los datos
 
-Para homologar las clases, se ordenan las listas siguiendo el orden dado en la tabla anterior. Entonces, se utilizan los siguientes vectores para el ordenamiento:
+Para homologar las clases, se ordenan las listas siguiendo el orden dado
+en la tabla anterior. Entonces, se utilizan los siguientes vectores para
+el ordenamiento:
 
-```{r vectores para ordenamiento}
+``` r
 # Vectores para ordenar listas
 orden_puni <- c(4,1,8,7,9,2,6,3,5)
 orden_pright <- c(2,6,4,7,9,3,5,8,1)
@@ -62,7 +65,7 @@ clases_pleft <- c(1,2,3,5,6,7,10,11)
 
 Ahora se realiza el ordenamiento de las listas con la siguiente función:
 
-```{r ordenamiento de listas}
+``` r
 ordenar_listas <- function(lista_desordenada, orden) {
    n_clases <- length(orden)
    lista_ordenada <- vector("list", length = n_clases)
@@ -75,7 +78,7 @@ ordenar_listas <- function(lista_desordenada, orden) {
 
 Mientras que para modificar los GT, se utiliza esta otra función:
 
-```{r cambio GT}
+``` r
 cambiar_gt <- function(gt, orden_etiquetas) {
   etiquetas <- as.integer(orden_etiquetas)
   dim_gt <- dim(gt)
@@ -94,7 +97,7 @@ cambiar_gt <- function(gt, orden_etiquetas) {
 
 ### Pavia University
 
-```{r Pavia University}
+``` r
 pix_puni <- ordenar_listas(lista_pixeles_pavia_uni, orden_puni)
 pos_puni <- ordenar_listas(lista_posiciones_pavia_uni, orden_puni)
 gt_puni <- cambiar_gt(pavia_uni_gt, orden_puni_gt)
@@ -102,7 +105,7 @@ gt_puni <- cambiar_gt(pavia_uni_gt, orden_puni_gt)
 
 ### Pavia Right
 
-```{r Pavia Right}
+``` r
 pix_pright <- ordenar_listas(lista_pixeles_pavia_right, orden_pright)
 pos_pright <- ordenar_listas(lista_posiciones_pavia_right, orden_pright)
 gt_pright <- cambiar_gt(pavia_right_gt, orden_pright_gt)
@@ -110,7 +113,7 @@ gt_pright <- cambiar_gt(pavia_right_gt, orden_pright_gt)
 
 ### Pavia Left
 
-```{r Pavia Left}
+``` r
 pix_pleft <- ordenar_listas(lista_pixeles_pavia_left, orden_pleft)
 pos_pleft <- ordenar_listas(lista_posiciones_pavia_left, orden_pleft)
 gt_pleft <- cambiar_gt(pavia_left_gt, orden_pleft_gt)
@@ -120,6 +123,6 @@ gt_pleft <- cambiar_gt(pavia_left_gt, orden_pleft_gt)
 
 Se guardan las estructuras ordenadas con nuevos nombres.
 
-```{r guardar estructuras}
+``` r
 save(clases_puni, pix_puni, pos_puni, gt_puni, clases_pright, pix_pright, pos_pright, gt_pright, clases_pleft, pix_pleft, pos_pleft, gt_pleft, file = file.path(ruta_datos,"datasets.RData"))
 ```
