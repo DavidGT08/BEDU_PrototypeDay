@@ -2,9 +2,6 @@
 .Rhistory
 .RData
 .Ruserdata
-data/pavia_uni.RData
-data/pavia_right.RData
-data/pavia_left.RData
 data/datasets.RData
 data/dim_datasets.csv
 data/datasets_dct.RData
