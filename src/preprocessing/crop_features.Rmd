@@ -1,0 +1,199 @@
+---
+title: "crop_features"
+author: "Equipo 5"
+date: "2023-11-17"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Selección de características
+
+Los sets de datos contienen más de 100 bandas, por lo tanto, los datos transformados en DCT también poseen más de 100 características. Esto se traduce en mayor complejidad para una SVM. Por lo tanto se procede a la selección de coeficientes DCT a partir de una métrica de similitud llamada Spectral Angle Mapper (SAM), la cual mide la correlación entre los vectores de clases de la siguiente forma:
+
+```{r cálculo de SAM medio}
+obtener_SAM <- function(lista_vectores, num_features) {
+  n_clases <- length(lista_vectores)
+  n_dist <- n_clases*n_clases - n_clases
+  sam_vector <- numeric(n_dist)
+  k <- 0
+  for(i in 1:n_clases) {
+    v_i <- lista_vectores[[i]][1:num_features] #Recorta la cantidad de caracteristicas
+    for(j in 1:n_clases) {
+      if(i != j) {
+        v_j <- lista_vectores[[j]][1:num_features] #Recorta la cantidad de caracteristicas
+        cross_corr <- abs(sum(v_i*v_j)) / (sqrt(sum(v_i*v_i)) * sqrt(sum(v_j*v_j))) #Correlación cruzada
+        sam_vector[k] <- 1 - (2/pi) * acos(cross_corr) #SAM limitado a [0,1]
+        k <- k + 1
+      }
+    }
+  }
+  sam_medio <- mean(sam_vector) #Valor SAM medio
+  return(sam_medio)
+}
+```
+
+El valor SAM debe calcularse en pares de clases diferentes abarcando todas las clases. Posteriormente, se obtiene el punto de corte donde la diferencia de SAM es menor a un error dado. Entonces, se tiene la siguiente función:
+
+```{r calculo punto de corte}
+punto_de_corte_features <- function(lista_kfold, lista_clases, zeroError, kfold_it) {
+  
+  # Lee los vectores de características
+  n_clases <- length(lista_clases)
+  lista_vectores <- vector("list", length = n_clases)
+  ind_aux <- 1
+  for(i in lista_clases) {
+    matriz_clase <- lista_kfold[[i]]$train[[kfold_it]]
+    vector_promedio <- colMeans(matriz_clase) #Calcula el vector promedio
+    lista_vectores[[ind_aux]] <- vector_promedio #Agrega el vector a la lista de vectores
+    ind_aux <- ind_aux + 1
+  }
+  
+  # Calcula SAM
+  n_features <- length(lista_vectores[[1]])
+  sam_features <- numeric(n_features)
+  for(f in 1:n_features) {
+    sam <- obtener_SAM(lista_vectores, f)
+    sam_features[f] <- sam
+    #sam_redondeado <- sprintf("%.4f", sam)
+    #print(paste("Features:",f,"SAM medio:",sam_redondeado))
+  }
+  
+  # Selecciona punto de corte
+  diferencia_vector <- diff(sam_features) #Calcula diferencia entre f y (f+1)
+  f_crop <- which(abs(diferencia_vector) <= zeroError)[1] #Obtiene el punto de corte
+  if(is.na(f_crop)) {
+    f_crop <- n_features #Si no se identifica punto de corte, se toma totalidad
+  }
+  
+  return(f_crop)
+}
+```
+
+El punto de corte para recortar los vectores de características se toma del promedio de los puntos de corte de las iteraciones k-fold:
+
+```{r punto de corte promedio}
+calcular_punto_corte <- function(lista_kfold, lista_clases, zeroError, n_kfold) {
+  f_crop_vector <- numeric(n_kfold)
+  for(i in 1:n_kfold) {
+    f_crop_vector[i] <- punto_de_corte_features(lista_kfold, lista_clases, zeroError, i) #Calcula punto de corte
+    print(paste("Num. features para set k-fold",i,":",f_crop_vector[i]))
+  }
+  punto_corte <- round(mean(f_crop_vector)) #Calcula la media de los puntos de corte
+  return(punto_corte)
+}
+```
+
+
+```{r función para guardar conjuntos procesados}
+guardar_train_test_procesados <- function(lista_kfold, lista_clases, zeroError, n_kfold) {
+  
+  lista_kfold_sam <- vector("list", length = n_kfold)
+  
+  # Calcular punto de corte
+  p_corte <- calcular_punto_corte(lista_kfold, lista_clases, zeroError, n_kfold)
+  print(paste("Punto de corte calculado en", p_corte, "features"))
+  
+  # Procesar por iteración de k-fold
+  for(k in 1:n_kfold) {
+    
+    # Definir estructuras para clasificar
+    matriz_train <- numeric()
+    matriz_test <- numeric()
+    etiquetas_train <- numeric()
+    etiquetas_test <- numeric()
+    
+    for(i in lista_clases) {
+      print(paste("Procesando conjuntos",k,"de",n_kfold,"de la clase",i))
+      
+      # Lee los vectores de características en los conjuntos train
+      matriz_clase <- lista_kfold[[i]]$train[[k]]
+      matriz_procesada <- matriz_clase[,1:p_corte] #Recorta las características
+      matriz_train <- rbind(matriz_train, matriz_procesada)
+      etiquetas_clase <- rep(i,nrow(matriz_procesada))
+      etiquetas_train <- c(etiquetas_train, etiquetas_clase)
+      
+      # Lee los vectores de características en los conjuntos test
+      matriz_clase <- lista_kfold[[i]]$test[[k]]
+      matriz_procesada <- matriz_clase[,1:p_corte] #Recorta las características
+      matriz_test <- rbind(matriz_test, matriz_procesada)
+      etiquetas_clase <- rep(i,nrow(matriz_procesada))
+      etiquetas_test <- c(etiquetas_test, etiquetas_clase)
+    }
+    
+    # Guarda en una lista
+    lista_kfold_sam[[k]] = list("mat_train" = matriz_train, "mat_test" = matriz_test, "lab_train" = etiquetas_train, "lab_test" = etiquetas_test)
+      
+    print("-----------------------------------------")
+  }
+  return(lista_kfold_sam)
+}
+
+```
+
+## Parámetros
+
+Se utilizaron 5 iteraciones k-fold y un valor de error de 0.0001:
+
+```{r parámetros}
+n_kfold <- 5 #Iteraciones kfold
+zeroError <- 1e-4 #Valor de error
+```
+
+
+## Lectura de los conjuntos
+
+El directorio de trabajo debe estar dado en /ruta/hacia/carpeta/BEDU_PrototypeDay. Entonces, es necesario revisar el directorio de trabajo actual con getwd() y, si es necesario, cambiarlo con setwd(). Ejemplo: setwd("~/documents/proyecto/BEDU_PrototypeDay").
+
+```{r ruta}
+ruta <- file.path("..","..","data") #Ruta hacia la carpeta data
+```
+
+Se leen los conjuntos de Pavia University, Pavia Right y Pavia Left en la carpeta ./data/train_test.
+
+```{r lectura}
+p <- "50" #Identificador de archivo tr_ts_p
+n <- "1" #identificador de archivo tr_ts_sam_p_n
+carpeta_conjuntos = file.path(ruta,"train_test")
+archivo_tr_ts <- file.path(carpeta_conjuntos, paste0("tr_ts_",p,".RData"))
+load(archivo_tr_ts)
+```
+
+Adicionalmente, se crea una carpeta para guardar los conjuntos de datos.
+
+```{r carpeta de conjuntos procesados}
+carpeta_conjuntos_procesados = file.path(ruta, paste0("train_test_sam"))
+if(file.exists(carpeta_conjuntos_procesados)) {
+  print(paste("Los datos se guardarán en", carpeta_conjuntos_procesados))
+} else {
+  dir.create(carpeta_conjuntos_procesados)
+  print(paste("Se creó la carpeta", carpeta_conjuntos_procesados, "para guardar los archivos"))
+}
+archivo_tr_ts_sam <- file.path(carpeta_conjuntos_procesados, paste0("tr_ts_sam_",p,"_",n,".RData"))
+```
+
+### Pavia Uni
+
+```{r Pavia Uni}
+kfold_puni_sam <- guardar_train_test_procesados(kfold_puni, clases_puni, zeroError, n_kfold)
+```
+
+### Pavia Right
+
+```{r Pavia Right}
+kfold_pright_sam <- guardar_train_test_procesados(kfold_pright, clases_pright, zeroError, n_kfold)
+```
+
+### Pavia Left
+
+```{r Pavia Left}
+kfold_pleft_sam <- guardar_train_test_procesados(kfold_pleft, clases_pleft, zeroError, n_kfold)
+```
+
+## Guardar conjuntos
+
+```{r guardar}
+save(kfold_puni_sam, clases_puni, kfold_pright_sam, clases_pright, kfold_pleft_sam, clases_pleft, file = archivo_tr_ts_sam)
+```
