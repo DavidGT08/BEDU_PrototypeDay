@@ -54,7 +54,8 @@ Como se aprecia, las imágenes hiperespectrales proporcionan mayor información 
 
 La prueba de concepto se sumerge en la eficiencia de la clasificación hiperespectral, destacando el uso de características reducidas para un entrenamiento y etiquetado más rápidos, resaltando la ingeniería detrás de un sistema que logra una velocidad de respuesta excepcional al procesar grandes volúmenes de datos, contribuyendo significativamente a la agilidad en la evaluación de imágenes aéreas.
 
-El proceso de la prueba de concepto se muestra a grandes rasgos en el flujo de proceso mostrado a continuación:
+### Flujo del Proceso
+El proceso de la prueba de concepto se muestra a grandes rasgos en el flujo del proceso mostrado a continuación:
 
 <p align="center">
 <img src="./docs/img/Flujo_proceso.png" width="713">
@@ -63,7 +64,7 @@ El proceso de la prueba de concepto se muestra a grandes rasgos en el flujo de p
 Se desarrollaron documentos en formato markdown para seguir este proceso:
 
 1. [Lectura de los datasets](./docs/1_read_datasets.md)
-2. [Limpieza de los datasets](./docs/2_clean_datasets.md)
+2. [Limpieza de los datos](./docs/2_clean_datasets.md)
 3. [Transformar datos a DCT](./docs/3_save_features_dct.md)
 4. [Selección de datos para entrenamiento y prueba](./docs/4_get_indices_kfold.md)
 5. [Separación de los datos](./docs/5_divide_train_and_test.md)
