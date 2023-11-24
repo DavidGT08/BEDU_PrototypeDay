@@ -19,13 +19,15 @@ Para abordar esta urgencia, surge la necesidad de un sistema innovador capaz de 
 
 ## Alcances del Proyecto
 
-Este documento se centra en destacar la prueba de concepto alcanzada hasta el momento, enfocándose en la aplicación inicial de clasificación de píxeles hiperespectrales en imágenes urbanas. Esta fase específica del proyecto ha logrado con éxito la identificación y etiquetado de elementos cruciales como árboles, asfalto, tierra, agua y azulejos.
+Este documento se centra en destacar la prueba de concepto alcanzada hasta el momento, enfocándose en la aplicación inicial de clasificación de píxeles hiperespectrales en imágenes urbanas. Esta fase específica del proyecto ha logrado con éxito la identificación y etiquetado de elementos cruciales como árboles, asfalto, tierra, agua y azulejos, satisfaciendo los objetivos del proyecto:
+
+* Implementación de un método de selección de características que permita reducir la cantidad de información que se proporciona a una Máquina de Vectores de Soporte (SVM) para un entrenamiento y etiquetado veloz.
+* La selección de características debe proporcionar flexibilidad en la cantidad y diversidad de clases a evaluar.
+* La clasificación debe ser exacta independientemente de la cantidad de clases seleccionadas.
 
 Es importante resaltar que, aunque la prueba de concepto se ha centrado en la clasificación de elementos urbanos, representa la fase inicial de un proyecto más amplio. Este hito en investigación y desarrollo (R&D) sienta las bases para futuras aplicaciones, especialmente la identificación de infraestructura dañada en situaciones de emergencia. La versatilidad de la tecnología desarrollada abre la puerta a futuras expansiones, permitiendo una contribución significativa en la gestión eficiente de desastres naturales y la evaluación de impactos en la infraestructura.
 
-## Logros de la prueba de concepto
-
-Logros de la Prueba de Concepto:
+## Logros de la Prueba de Concepto
 
 1. **Etiquetado Multiclase:**
    La prueba de concepto ha logrado un etiquetado multiclase de las imágenes, proporcionando una notable versatilidad al permitir la selección de elementos específicos a buscar en las escenas. Esta capacidad es crucial para adaptarse a diversas situaciones y facilita la identificación precisa de elementos clave en entornos complejos.
