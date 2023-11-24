@@ -40,7 +40,7 @@ Es importante resaltar que, aunque la prueba de concepto se ha centrado en la cl
 
 Estos logros consolidan la viabilidad y eficacia de la prueba de concepto, marcando un hito significativo en el desarrollo de un sistema capaz de abordar con éxito la identificación y evaluación de elementos cruciales en imágenes aéreas.
 
-## Descripción técnica
+## Descripción Técnica
 
 La prueba de concepto destaca una innovadora metodología de identificación visual que utiliza técnicas avanzadas de etiquetado multiclase, permitiendo una selección versátil de elementos en imágenes urbanas. Este enfoque técnico pone de relieve la capacidad del sistema para adaptarse a diversas escenas y mejorar la eficiencia en la identificación de elementos clave.
 
