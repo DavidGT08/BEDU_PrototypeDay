@@ -91,3 +91,9 @@ Con la exitosa prueba de concepto como base, el próximo paso crítico implica c
 Posteriormente, se enfocará en el desarrollo de la infraestructura en la nube, estableciendo una base tecnológica sólida para el sistema. Esta infraestructura proporcionará la escalabilidad necesaria y facilitará la gestión eficiente de grandes conjuntos de datos, esencial para la aplicación práctica del sistema en situaciones de desastre.
 
 Simultáneamente, se iniciará la implementación de la integración continua de datos, asegurando la actualización constante y automática de la información. Este enfoque permitirá mantener la relevancia y precisión del sistema en una eficiente velocidad de respuesta, garantizando su capacidad para adaptarse a entornos dinámicos y emergencias en curso.
+
+Estos pasos se pueden visualizar en la siguiente infografía:
+
+<p align="center">
+<img src="./docs/img/Next_steps.png" width="317">
+</p>
