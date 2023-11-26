@@ -5,6 +5,8 @@
 
 Este proyecto utiliza técnicas avanzadas de clasificación de píxeles en imágenes hiperespectrales para identificar de manera precisa y eficiente los elementos contenidos en las imágenes, proporcionando valiosos insights sobre la composición de la escena capturada. Su versatilidad lo posiciona como una base sólida para futuras aplicaciones, incluida la identificación de daños causados por catástrofes naturales.
 
+Adicionalmente, el proyecto cuenta con un tablero en la siguiente dirección: [Tablero shiny](https://ns24sk-beatriz0paulina.shinyapps.io/Clasificacion_hiper/)
+
 ## Motivación
 
 * El huracán OTIS toca tierra sobre las costas de Acapulco, Guerrero, el 25 de octubre de 2023 en categoría 5 (escala Saffir-Simpson).
@@ -19,7 +21,7 @@ Para abordar esta urgencia, surge la necesidad de un sistema innovador capaz de 
 
 ## Alcances del Proyecto
 
-Este documento se centra en destacar la prueba de concepto alcanzada hasta el momento, enfocándose en la aplicación inicial de clasificación de píxeles hiperespectrales en imágenes urbanas. Esta fase específica del proyecto ha logrado con éxito la identificación y etiquetado de elementos cruciales como árboles, asfalto, tierra, agua y azulejos, satisfaciendo los objetivos del proyecto:
+Este documento se centra en destacar la prueba de concepto alcanzada hasta el momento, enfocándose en la aplicación inicial de clasificación de píxeles hiperespectrales en imágenes urbanas. Esta fase específica del proyecto ha logrado con éxito la identificación y etiquetado de elementos cruciales como árboles, asfalto, tierra, agua y tejados, satisfaciendo los objetivos del proyecto:
 
 * Implementación de un método de selección de características que permita reducir la cantidad de información que se proporciona a una Máquina de Vectores de Soporte (SVM) para un entrenamiento y etiquetado veloz.
 * La selección de características debe proporcionar flexibilidad en la cantidad y diversidad de clases a evaluar.
