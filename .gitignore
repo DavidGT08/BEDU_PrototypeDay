@@ -14,3 +14,4 @@ data/kfold_indices/indices_50.RData
 models/binded_50_1.RData
 data/class_maps_binded_1.RData
 data/class_maps.RData
+data/mean_vectors.RData

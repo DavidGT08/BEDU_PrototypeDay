@@ -1,0 +1,63 @@
+---
+title: "visualization_hyperspectral_signal"
+author: "Equipo 5"
+date: "2023-11-20"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Leer datasets
+
+Se leen los datos de las clases de los datasets Pavia University, Pavia Right y Pavia Left en las carpeta ./data.
+
+```{r ruta}
+ruta <- file.path("..","..","data") #Une los elementos del directorio
+load(file.path(ruta,"datasets.RData"))
+```
+
+## Función para obtener la señal media por clase
+
+```{r función obtener medias}
+obtener_medias <- function(lista_pix, lista_clases) {
+  
+  # Lee los vectores de características
+  n_clases <- length(lista_clases)
+  lista_vectores <- vector("list", length = n_clases)
+  ind_aux <- 1
+  for(i in 1:n_clases) {
+    vector_promedio <- colMeans(lista_pix[[i]]) #Calcula el vector promedio
+    lista_vectores[[ind_aux]] <- vector_promedio #Agrega el vector a la lista de vectores
+    ind_aux <- ind_aux + 1
+  }
+  return(list("mean_vect" = lista_vectores, "clases" = lista_clases))
+}
+```
+
+## Cómputo de señales medias
+
+```{r}
+mean_puni <- obtener_medias(pix_puni, clases_puni)
+mean_pright <- obtener_medias(pix_pright, clases_pright)
+mean_pleft <- obtener_medias(pix_pleft, clases_pleft)
+save(mean_puni, mean_pright, mean_pleft, file = file.path(ruta,"mean_vectors.RData"))
+```
+
+## Graficar la señal media
+
+Se utiliza plot para graficar el pixel. Se ha acotado el eje de las ordenadas para mostrar la escala de acuerdo con la máxima reflectancia de los datos.
+
+```{r grafica pixel}
+lista_vectores <- mean_puni$mean_vect
+label_clase <- 1
+max_reflectancia <- max(lista_vectores[[label_clase]]) #Valor máximo de reflectancia
+y_limites <- c(0,max_reflectancia) #Límites para el eje de ordenadas
+dimension_pixel <- length(lista_vectores[[label_clase]]) #Tamaño del vector del pixel
+X <- 1:dimension_pixel #Vector de valores para el eje de abscisas (bandas)
+xlabel <- "Banda"
+ylabel <- "Reflectancia"
+title <- "Señal de un pixel"
+plot(X, lista_vectores[[label_clase]], type='l', col = "blue", ylim = y_limites, main = title, xlab = xlabel, ylab = ylabel)
+```
