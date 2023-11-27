@@ -29,7 +29,7 @@ Este documento se centra en destacar la prueba de concepto alcanzada hasta el mo
 
 Es importante resaltar que, aunque la prueba de concepto se ha centrado en la clasificación de elementos urbanos, representa la fase inicial de un proyecto más amplio. Este hito en investigación y desarrollo (R&D) sienta las bases para futuras aplicaciones, especialmente la identificación de infraestructura dañada en situaciones de emergencia. La versatilidad de la tecnología desarrollada abre la puerta a futuras expansiones, permitiendo una contribución significativa en la gestión eficiente de desastres naturales y la evaluación de impactos en la infraestructura.
 
-## Logros de la Prueba de Concepto
+## Logros del Proyecto
 
 1. **Etiquetado Multiclase:**
    La prueba de concepto ha logrado un etiquetado multiclase de las imágenes, proporcionando una notable versatilidad al permitir la selección de elementos específicos a buscar en las escenas. Esta capacidad es crucial para adaptarse a diversas situaciones y facilita la identificación precisa de elementos clave en entornos complejos.
