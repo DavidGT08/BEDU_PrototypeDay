@@ -1,7 +1,9 @@
-# Este análisis se realizó localmente.
-#Para replicarlo, es necesario descargar las bases de datos desde:
-#https://github.com/BeatrizPaulina/RosisDataCsv/raw/main
-#Adicionalmente, se debe agregar la ruta hacia estos datos en el path_local_a_archivos:
+# Este análisis se realizó localmente para apoyar al análisis de correlación cruzada utilizado
+# para validad la semejanza de las clases de los diferentes datasets.
+
+# Para replicarlo, es necesario descargar las bases de datos desde:
+# https://github.com/BeatrizPaulina/RosisDataCsv/raw/main
+# Adicionalmente, se debe agregar la ruta hacia estos datos en el path_local_a_archivos:
 
 path_local_a_archivos <- "path_local_a_archivos" #ruta a la carpeta de los datos descargados.
 
