@@ -66,7 +66,10 @@ El proceso de la prueba de concepto se muestra a grandes rasgos en el flujo del 
 Se desarrollaron documentos en formato markdown para seguir este proceso:
 
 1. [Lectura de los datasets](./docs/1_read_datasets.md)
-2. [Limpieza de los datos](./docs/2_clean_datasets.md)
+2. [Limpieza de los datos](./docs/2_clean_datasets.md). Se realiza considerando el análisis de correlación cruzada.
+
+    2.1. [Correlacion cruzada de  las clases](./docs/correlacion_cruzada.md)
+
 3. [Transformar datos a DCT](./docs/3_save_features_dct.md)
 4. [Selección de datos para entrenamiento y prueba](./docs/4_get_indices_kfold.md)
 5. [Separación de los datos](./docs/5_divide_train_and_test.md)
