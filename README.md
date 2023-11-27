@@ -44,7 +44,7 @@ Estos logros consolidan la viabilidad y eficacia de la prueba de concepto, marca
 
 ## Descripción Técnica
 
-La prueba de concepto destaca una innovadora metodología de identificación visual que utiliza técnicas avanzadas de etiquetado multiclase, permitiendo una selección versátil de elementos en imágenes urbanas. Este enfoque técnico pone de relieve la capacidad del sistema para adaptarse a diversas escenas y mejorar la eficiencia en la identificación de elementos clave.
+Nuestro proyecto destaca una innovadora metodología de identificación visual que utiliza técnicas avanzadas de etiquetado multiclase, permitiendo una selección versátil de elementos en imágenes urbanas. Este enfoque técnico pone de relieve la capacidad del sistema para adaptarse a diversas escenas y mejorar la eficiencia en la identificación de elementos clave.
 
 Esta descripción inicia con la definición de una imagen hiperespectral. Este tipo de imagen contiene las señales de reflectancia recabadas por un espectrómetro. Las señales de los objetos capturados en la imagen proporcionan información acerca de su composición. En palabras simples, la señal hiperespectral permite conocer si en un pixel se encuentra una planta, tierra, agua o un edificio, por ejemplo. La diferencia entre la estructura de estas imágenes y aquellas que utilizamos para inmortalizar nuestros recuerdos con el celular se muestra en la siguiente figura:
 
