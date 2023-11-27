@@ -5,7 +5,7 @@
 
 Este proyecto utiliza técnicas avanzadas de clasificación de píxeles en imágenes hiperespectrales para identificar de manera precisa y eficiente los elementos contenidos en las imágenes, proporcionando valiosos insights sobre la composición de la escena capturada. Su versatilidad lo posiciona como una base sólida para futuras aplicaciones, incluida la identificación de daños causados por catástrofes naturales.
 
-Adicionalmente, el proyecto cuenta con un tablero en la siguiente dirección: [Tablero shiny](https://ns24sk-beatriz0paulina.shinyapps.io/Clasificacion_hiper/)
+Adicionalmente, el proyecto cuenta con un tablero en la siguiente dirección: [Tablero shiny versión desktop](https://ns24sk-beatriz0paulina.shinyapps.io/Clasificacion_hiper/) (el tablero debe visualizarse en equipos desktop).
 
 ## Motivación
 
@@ -103,3 +103,12 @@ Estos pasos se pueden visualizar en la siguiente infografía:
 <p align="center">
 <img src="./docs/img/Next_steps.png" width="317">
 </p>
+
+## Integrantes
+
+El proyecto fue realizado por el equipo 5 del programa **Data scientist de Becas Santander | Talento Digital para el Futuro | Bedu 2023**.
+El equipo se conforma de la siguiente manera:
+
+* Beatriz Paulina García Salgado
+* Rodrigo Alejandro Aguilar Rosel
+* David Gómez Torres
