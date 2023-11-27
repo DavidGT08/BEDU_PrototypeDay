@@ -1,0 +1,99 @@
+---
+title: "correlacion_cruzada"
+author: "Equipo 5"
+date: "2023-11-26"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Correlación cruzada
+
+Vamos a realizar un análisis de correlación, usando las señales medias de cada clase. La idea es hacer la correlación entre los dataset *Pavia_university* y *Pavia_right.* Recordemos que cada clase tiene una etiqueta diferente en los datasets.
+
+(Revisar la tabla de correspondencia entre clase-etiqueta por dataset)
+
+### Leer csv
+
+El directorio de trabajo debe estar dado en /ruta/hacia/carpeta/BEDU_PrototypeDay. Entonces, es necesario revisar el directorio de trabajo actual con getwd() y, si es necesario, cambiarlo con setwd(). Ejemplo: setwd("\~/documents/proyecto/BEDU_PrototypeDay").
+
+```{r read csv}
+df <- read.csv(file.path("..","..","data","cross_correlation_by_classes.csv"))
+```
+
+### Selección de los pares de columnas correspondientes
+
+Convertimos cada columna en un vector para posteriormente, pasarselo a la función que calcula la correlación.
+
+```{r select columns}
+asphalt_uni <- df$asphalt_uni
+asphalt_right <- df$asphalt_right
+
+meadows_uni <- df$meadows_uni
+meadows_right <- df$meadows_right
+
+trees_uni <- df$trees_uni
+trees_right <- df$trees_right
+
+bare.soil_uni <- df$bare.soil_uni
+bare.soil_right <- df$bare.soil_right
+
+bitumen_uni <- df$bitumen_uni
+bitumen_right <- df$bitumen_right
+
+self.blocking.bricks_uni <- df$self.blocking.bricks_uni
+self.blocking.bricks_right <- df$self.blocking.bricks_right
+
+```
+
+### Calcular la correlación cruzada por clase en cada uno de sus lags y su gráfica
+
+Se puede observar que las clases de los diferentes datasets se encuentran altamente correlacionadas, por lo que es posible hacer una homologación de las observaciones de los datasets para conformar una sola biblioteca de clases.
+
+#### Asphalt
+
+```{r calculate cross correlation of asphalt}
+
+print(ccf(asphalt_uni, asphalt_right))
+
+```
+
+#### Meadows
+
+```{r calculate cross correlation of meadows}
+
+print(ccf(meadows_uni, meadows_right))
+```
+
+#### Trees
+
+```{r calculate cross correlation of trees}
+
+print(ccf(trees_uni, trees_right))
+
+```
+
+#### Bare-soil
+
+```{r calculate cross correlation of bare-soil}
+
+print(ccf(bare.soil_uni, bare.soil_right))
+
+```
+
+#### Bitumen
+
+```{r calculate cross correlation of bitumen}
+
+print(ccf(bitumen_uni, bitumen_right))
+```
+
+#### Self-blocking-bricks
+
+```{r calculate cross correlation of Self-blocking-bricks}
+
+print(ccf(self.blocking.bricks_uni, self.blocking.bricks_right))
+
+```
