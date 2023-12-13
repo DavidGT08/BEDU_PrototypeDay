@@ -1,6 +1,12 @@
 # BEDU_PrototypeDay
 # Clasificación de Píxeles en Imágenes Hiperespectrales: Revelando Elementos
 
+Proyecto ganador de Prototype Day - Data Scientist 2023.
+
+<p align="left">
+<img src="./docs/img/Insignia_proyecto_ganador.png" width="250">
+</p>
+
 ## Resumen
 
 Este proyecto utiliza técnicas avanzadas de clasificación de píxeles en imágenes hiperespectrales para identificar de manera precisa y eficiente los elementos contenidos en las imágenes, proporcionando valiosos insights sobre la composición de la escena capturada. Su versatilidad lo posiciona como una base sólida para futuras aplicaciones, incluida la identificación de daños causados por catástrofes naturales.
