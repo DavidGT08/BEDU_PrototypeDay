@@ -13,6 +13,14 @@ Este proyecto utiliza técnicas avanzadas de clasificación de píxeles en imág
 
 Adicionalmente, el proyecto cuenta con un tablero en la siguiente dirección: [Tablero shiny versión desktop](https://ns24sk-beatriz0paulina.shinyapps.io/Clasificacion_hiper/) (el tablero debe visualizarse en equipos desktop).
 
+## Ejemplo de uso
+
+En la imagen se muestra cómo el modelo clasifica la imagen dependiendo del material seleccionado. Lo anterior es desplegado en un dashboard interactivo de Shiny
+
+<p align="left">
+<img src="./docs/img/Insignia_proyecto_ganador.png" width="250">
+</p>
+
 ## Motivación
 
 * El huracán OTIS toca tierra sobre las costas de Acapulco, Guerrero, el 25 de octubre de 2023 en categoría 5 (escala Saffir-Simpson).
